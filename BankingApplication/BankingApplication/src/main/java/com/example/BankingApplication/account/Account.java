@@ -16,11 +16,10 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int id;
-    private long accountNO;
+    private long accountNo;
     @ManyToOne
     private Users users;
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Bank bank;
     private double balance=0.0;
     private String accountType;

@@ -69,7 +69,7 @@ public class UsersService {
             usersRepository.save(users);
             response1.put("message","Update User id "+userUpdateDto.getUserId()+", Successfully!");
             response.put("isSuccess",true);
-            response.put("message",users);
+            response.put("message","updated User Successfully!");
         }
         return  response;
     }

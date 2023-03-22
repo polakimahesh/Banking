@@ -1,8 +1,10 @@
 package com.example.BankingApplication.transaction;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.List;
+
 public interface TransactionRepository extends JpaRepository<Transaction,Integer> {
+    List<Transaction> findByAccountNumber(Long accountNumber);
+
 }
