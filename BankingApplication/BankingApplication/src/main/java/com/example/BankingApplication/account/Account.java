@@ -23,5 +23,6 @@ public class Account {
     private Bank bank;
     private double balance=0.0;
     private String accountType;
+    private Boolean isActive;
 
 }

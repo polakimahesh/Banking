@@ -2,6 +2,7 @@ package com.example.BankingApplication.account;
 
 import com.example.BankingApplication.Dto.AccountDto;
 import com.example.BankingApplication.Dto.AccountResponseDto;
+import com.example.BankingApplication.Dto.ListOfAccountDetails;
 import com.example.BankingApplication.bank.Bank;
 import com.example.BankingApplication.bank.BankRepository;
 import com.example.BankingApplication.enums.AccountType;
@@ -10,6 +11,7 @@ import com.example.BankingApplication.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -37,12 +39,28 @@ public class AccountService {
     }
 
 
-    public Account getAccountByAccountNo(AccountResponseDto accountResponseDto){
-//        Account account=accountRepository.findByAccountNo(accountResponseDto.getAccountNo());
-//        Bank bank=bankRepository.findById(accountResponseDto.getBankId()).orElse(null);
-//        Users users = usersRepository.findById(accountResponseDto.getUserId()).orElse(null);
+    public HashMap<String,Object>  getAccountByAccountNo(AccountResponseDto accountResponseDto){
+        HashMap<String,Object> response = new HashMap<>();
+        HashMap<String,Object> response1= new HashMap<>();
+        Account account=accountRepository.findByAccountNo(accountResponseDto.getAccountNo());
 
-        return null;
+        if(account==null){
+            response1.put("message","inValid User account no "+ accountResponseDto.getAccountNo());
+            response.put("isSuccess",false);
+            response.put("message",response1);
+        }else {
+            ListOfAccountDetails listOfAccountDetails = new ListOfAccountDetails();
+            listOfAccountDetails.setUsersLastName(account.getUsers().getLastName());
+            listOfAccountDetails.setUsersFirstName(account.getUsers().getFirstName());
+            listOfAccountDetails.setAccountType(account.getAccountType());
+            listOfAccountDetails.setBalance(account.getBalance());
+            listOfAccountDetails.setBankName(account.getBank().getName());
+            listOfAccountDetails.setBankIfscCode(account.getBank().getIfscCode());
+            accountResponseDto.setListOfAccountDetails(listOfAccountDetails);
+            response.put("isSuccess",true);
+            response.put("message",accountResponseDto);
+        }
+        return response;
     }
 
 
@@ -57,10 +75,14 @@ public class AccountService {
         account.setUsers(users);
         if(accountDto.getAccountType()!=null && "Current".equalsIgnoreCase(accountDto.getAccountType())){
             account.setAccountType(AccountType.CURRENT.getAccountType());
-        }else {
+        }else if(accountDto.getAccountType()!=null && "Salary".equalsIgnoreCase(accountDto.getAccountType())){
+            account.setAccountType(AccountType.SALARY.getAccountType());
+        }
+        else {
             account.setAccountType(AccountType.SAVINGS.getAccountType());
         }
         account.setBalance(accountDto.getBalance());
+        account.setIsActive(accountDto.getIsActive());
         accountRepository.save(account);
        return account;
     }

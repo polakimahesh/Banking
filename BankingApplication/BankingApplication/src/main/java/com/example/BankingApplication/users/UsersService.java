@@ -2,6 +2,7 @@ package com.example.BankingApplication.users;
 
 import com.example.BankingApplication.Dto.UserDeleteDto;
 import com.example.BankingApplication.Dto.UserUpdateDto;
+import com.example.BankingApplication.Dto.UsersDetailsDto;
 import com.example.BankingApplication.Dto.UsersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +23,7 @@ public class UsersService {
     public List<Users> getAllUsers(){
         return usersRepository.findAll().stream().sorted(Comparator.comparingInt(Users::getId)).collect(Collectors.toList());
     }
-    public Users createUser(UsersDto usersDto) {
+    public HashMap<String,Object> createUser(UsersDto usersDto) {
         Users users = new Users();
         users.setFirstName(usersDto.getFirstName());
         users.setLastName(usersDto.getLastName());
@@ -32,21 +33,30 @@ public class UsersService {
         String encodedPassword = passwordEncoder.encode(usersDto.getPassword());
         users.setPassword(encodedPassword);
         usersRepository.save(users);
-        return users;
+        HashMap<String,Object> object= new HashMap<>();
+        object.put("message","Users created Successfully!");
+        return object;
     }
 
     public HashMap<String,Object> getSingleUser(int id){
         HashMap<String,Object> response = new HashMap<>();
         HashMap<String,Object> response1= new HashMap<>();
-        var users = usersRepository.findById(id);
-        if(users.isEmpty()){
+        var users = usersRepository.findById(id).orElse(null);
+        if(users==null){
             response1.put("message","incorrect User id "+id+", please enter the valid id!");
             response.put("isSuccess",false);
             response.put("message",response1);
-            return  response;
+        }else {
+            UsersDetailsDto usersDetailsDto = new UsersDetailsDto();
+            usersDetailsDto.setFirstName(users.getFirstName());
+            usersDetailsDto.setLastName(users.getLastName());
+            usersDetailsDto.setEmail(users.getEmail());
+            usersDetailsDto.setMobileNo(users.getMobileNo());
+            usersDetailsDto.setDateOfBirth(users.getDateOfBirth());
+            response.put("isSuccess",true);
+            response.put("message",usersDetailsDto);
         }
-        response.put("isSuccess",true);
-        response.put("message",users);
+
         return  response;
     }
 

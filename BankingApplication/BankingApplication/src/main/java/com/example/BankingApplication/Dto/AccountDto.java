@@ -8,4 +8,5 @@ public class AccountDto {
     private int bankId;
     private  double balance;
     private String accountType;
+    private  Boolean isActive;
 }

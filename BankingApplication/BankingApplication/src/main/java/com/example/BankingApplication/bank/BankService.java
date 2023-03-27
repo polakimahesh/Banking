@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BankService {
@@ -24,7 +26,7 @@ public class BankService {
     }
 
     public List<Bank> getAllBanks(){
-        return bankRepository.findAll();
+        return bankRepository.findAll().stream().sorted(Comparator.comparing(Bank::getName)).collect(Collectors.toList());
     }
 
     public HashMap<String,Object> getSingleBank(int id){

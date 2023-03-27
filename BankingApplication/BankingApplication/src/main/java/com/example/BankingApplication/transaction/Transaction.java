@@ -16,11 +16,12 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-
-     private Long accountNumber;
-     private String transactionType;
-     private double amount;
-     private String transactionDescription;
-     private LocalDateTime transactionTime;
+    private Long fromAccountNo;
+    private Long toAccountNo;
+    private String fromTransactionType;
+    private String toTransactionType;
+    private double amount;
+    private String transactionDescription;
+    private LocalDateTime transactionTime;
 
 }

@@ -2,7 +2,8 @@ package com.example.BankingApplication.enums;
 
 public enum AccountType {
     SAVINGS("Savings"),
-    CURRENT("Current");
+    CURRENT("Current"),
+    SALARY("Salary");
     private String accountType;
 
     public String getAccountType() {

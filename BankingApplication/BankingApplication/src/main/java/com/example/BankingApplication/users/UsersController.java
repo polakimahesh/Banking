@@ -24,7 +24,7 @@ public class UsersController {
 
     @PostMapping("/register-user")
     public ResponseEntity<Object> createUsers(@Valid @RequestBody UsersDto usersDto){
-        Users users= usersService.createUser(usersDto);
+        var users= usersService.createUser(usersDto);
         if(users!=null) {
             return new ResponseEntity<>(users, HttpStatus.CREATED);
         }else {

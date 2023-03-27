@@ -18,17 +18,16 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @GetMapping("")
-    public  ResponseEntity<List<Account>> getAllAccounts(){
+    public  ResponseEntity<Object> getAllAccounts(){
         return new ResponseEntity<>(accountService.getAllAccounts(),HttpStatus.OK);
     }
     @PostMapping("/get-single-account")
     public ResponseEntity<Object> getSingleAccountByAccountNO(@RequestBody AccountResponseDto accountNoDto){
-        Account account = accountService.getAccountByAccountNo(accountNoDto);
-        if(account!=null){
-            return new ResponseEntity<>(account,HttpStatus.OK);
-        }else {
-            return  new ResponseEntity<>("Account no is not found!",HttpStatus.NOT_FOUND);
-        }
+        var account = accountService.getAccountByAccountNo(accountNoDto);
+        if(Boolean.TRUE.equals(account.get("isSuccess"))){
+            return ResponseEntity.ok(account.get("message"));
+        }else
+            return ResponseEntity.badRequest().body(account.get("message"));
     }
 
     @PostMapping("/create-account")
