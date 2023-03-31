@@ -1,5 +1,6 @@
 package com.example.BankingApplication.transaction;
 
+import com.example.BankingApplication.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,13 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
-    private Long fromAccountNo;
-    private Long toAccountNo;
-    private String fromTransactionType;
-    private String toTransactionType;
-    private double amount;
+    private Integer id;
+    @ManyToOne
+    private Account fromAccountNo;
+    @ManyToOne
+    private Account toAccountNo;
+    private String transactionType;
+    private Double amount;
     private String transactionDescription;
     private LocalDateTime transactionTime;
 

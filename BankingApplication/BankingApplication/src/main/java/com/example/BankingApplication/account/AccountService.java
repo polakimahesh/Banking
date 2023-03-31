@@ -70,6 +70,7 @@ public class AccountService {
         Bank bank = bankRepository.findById(accountDto.getBankId()).orElse(null);
         Users users =usersRepository.findById(accountDto.getUserId()).orElse(null);
 
+
         account.setAccountNo(getAccountNumber());
         account.setBank(bank);
         account.setUsers(users);

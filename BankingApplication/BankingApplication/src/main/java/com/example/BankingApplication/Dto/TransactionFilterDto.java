@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class TransactionFilterDto {
-    private String fromTransactionType;
+    private String transactionType;
 
     private LocalDate transactionTime;
     private List<ListOfTransactionFilterDto> listOfTransactionFilterDtos;

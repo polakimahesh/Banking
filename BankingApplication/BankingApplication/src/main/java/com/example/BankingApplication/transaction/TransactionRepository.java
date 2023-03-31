@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction,Integer> {
-    List<Transaction> findByTransactionTimeBetween(LocalDateTime transactionTimeStart, LocalDateTime transactionTimeEnd);
+    List<Transaction> findByFromAccountNo_AccountNo(Long accountNo);
 
-    List<Transaction> findByFromAccountNo(Long fromAccountNo);
+    List<Transaction> findByTransactionTypeAndTransactionTimeBetween(String transactionType, LocalDateTime transactionTimeStart, LocalDateTime transactionTimeEnd);
 
 
-    List<Transaction> findByFromTransactionTypeAndTransactionTimeBetween(String fromTransactionType, LocalDateTime transactionTimeStart, LocalDateTime transactionTimeEnd);
+
 
 
 

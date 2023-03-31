@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
+    private  Integer id;
     private  String name;
     private String ifscCode;
     private String branch;

@@ -1,5 +1,6 @@
 package com.example.BankingApplication.Dto;
 
+import com.example.BankingApplication.account.Account;
 import lombok.Data;
 
 import java.time.LocalDateTime;

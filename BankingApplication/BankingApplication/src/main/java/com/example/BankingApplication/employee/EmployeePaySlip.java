@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 @Data
 @AllArgsConstructor
@@ -13,12 +16,13 @@ import java.time.LocalDate;
 @Entity
 public class EmployeePaySlip {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
-    private long accountNo;
+    private Long accountNo;
     private String accountType;
     private LocalDate payPeriod;
-    private  double professionalTax;
-    private double grossDeduction;
-    private double payAmount;
+    private  Double professionalTax;
+    private Double grossDeduction;
+    private Double payAmount;
 }
